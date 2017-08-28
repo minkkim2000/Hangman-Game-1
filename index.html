@@ -6,15 +6,24 @@
 	<!-- Bootstrap 4 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<script type="text/javascript" src="assets/javascript/game.js"></script>
+	<script type="text/javascript" src="assets/javascript/hangman.js" async></script>
+	<script type="text/javascript" src="assets/javascript/game.js" async></script>
 </head>
 <body>
 	<header>
-		<div>
+		<div id="container">
 			<h1>Welcome to the 90's Hip Hop Artist Hang Man game!</h1>
 		</div>
 	</header>
 	<div>
+		<h2>Select a game mode</h2>
+		<ul id="game-mode">
+			<li id="easy">Easy</li>
+			<li id="medium">Medium</li>
+			<li id="hard">Hard</li>
+		</ul>
+		<h3>Start Game!</h3>
+		<button id="start-game">Click to play!</button>
 		<ul id="hangman-ul">
 			
 		</ul>
