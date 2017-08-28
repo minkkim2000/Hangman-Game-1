@@ -26,5 +26,4 @@ startGame.addEventListener("click",function () {
 document.onkeyup = function(event) {
 	hangman.userGuessTracker(event.key);
 	hangman.userCorrectGuessTracker(event.key);
-	hangman.guessNumberCalculator();
 }
