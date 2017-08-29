@@ -47,8 +47,11 @@ startGame.addEventListener("click",function () {
 })
 
 document.onkeyup = function(event) {
-	if(!(gameMode === undefined || gameCategory === undefined))
-		hangman.userGuessTracker(event.key);
+	if(!(gameMode === undefined || gameCategory === undefined)){
+		// Only allow numbers and letters
+		if((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90))
+			hangman.userGuessTracker(event.key);
+	}
 	else
 		alert("Please select a game mode and a category");
 }

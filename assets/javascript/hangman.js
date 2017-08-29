@@ -55,7 +55,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       // Check if array is empty
       if(userGuessArray.length > 0){
         // Check if letter already in array
-        if(userGuessArray.indexOf(key) !== -1)
+        if(userGuessArray.indexOf(key) === -1)
           userGuessArray.push(key);
       }
       else if (userGuessArray.length === 0) {
@@ -68,6 +68,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       gameOverCheck();
     }
     userCorrectGuessTracker(key);
+    updateAlreadyGuessed();
   }
 
   // Track how many letters the user has guessed correctly
@@ -205,9 +206,16 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     winDom.innerHTML = wins;
   }
 
-  // Update number of guesses remaining
+  // Update number of guesses remaining in DOM
   function updateGuessDom () {
     var guessDom = document.getElementById("guesses");
     guessDom.innerHTML = self.numberOfGuessesCount;
+  }
+
+  // Update letters already guessed in DOM
+  function updateAlreadyGuessed () {
+    console.log(userGuessArray + "this is what your looking for");
+    var alreadyGuessedDom = document.getElementById("already-guessed");
+    alreadyGuessedDom.innerHTML = userGuessArray.toString().toUpperCase();
   }
 }
