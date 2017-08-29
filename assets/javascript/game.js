@@ -19,11 +19,10 @@ startGame.addEventListener("click",function () {
 		hangman = new Hangman(ninetiesHipHopArtistArray,medium);
 	else if (gameMode === "hard")
 		hangman = new Hangman(ninetiesHipHopArtistArray,hard);
-	hangman.isPlaying = true;
+	hangman.isPlayingBoolean = true;
 	hangman.artistGenerator();
 })
 
 document.onkeyup = function(event) {
 	hangman.userGuessTracker(event.key);
-	hangman.userCorrectGuessTracker(event.key);
 }
