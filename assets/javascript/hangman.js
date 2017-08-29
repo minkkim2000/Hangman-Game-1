@@ -44,6 +44,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       uniqueArtistLetterCount();
       // Add artist name to DOm
       insertArtistIntoDom();
+      updateGuessDom();
     }
   }
 
@@ -92,6 +93,8 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     if(userCorrectGuessesArray.length === artistLetterCount){
       wins++;
       console.log("WIN!");
+      addArtistNametoDom();
+      updateWinCounterinDom();
       correctlyGuessedArtists();
       gameOverCheck();
     }
@@ -100,6 +103,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Number of guesses remaining
   function guessNumberCalculator () {
     self.numberOfGuessesCount--;
+    updateGuessDom();
   }
 
   // Insert artist name into DOM
@@ -111,7 +115,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     artistUl.innerHTML = "";
     // Loop through selectedArtistString and append <li> tags to them
     for(var i = 0; i < selectedArtistString.length; i++) {
-      artistLi += "<li>" + selectedArtistString.charAt(i) + "</li>";
+      artistLi += "<li><h1 class=\"h1\"><span>" + selectedArtistString.charAt(i) + "</span></h1></li>";
     }
     // Insert the new <li> tags into the innerHTML of the UL
     artistUl.innerHTML = artistLi;
@@ -121,20 +125,20 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Hide letters in DOM
   function hideArtistLetterInDom (artistUl) {
-    var artistLi = artistUl.getElementsByTagName("li");
-    for(var i = 0; i < artistLi.length; i++) {
-      if(artistLi[i].innerHTML !== " ")
-        artistLi[i].style.display = "none";
+    var artistSpan = artistUl.getElementsByTagName("span");
+    for(var i = 0; i < artistSpan.length; i++) {
+      if(artistSpan[i].innerHTML !== " ")
+        artistSpan[i].style.visibility = "hidden";
     }
   }
 
   // Unhide correctly guessed letters
   function unhideArtistLetterInDom (key) {
     var artistUl = document.getElementById("hangman-ul");
-    var artistLi = artistUl.getElementsByTagName("li");
-    for(var i = 0; i < artistLi.length; i++) {
-      if(artistLi[i].innerHTML.toLowerCase() === key)
-        artistUl.children[i].style.display = "block";
+    var artistSpan = artistUl.getElementsByTagName("span");
+    for(var i = 0; i < artistSpan.length; i++) {
+      if(artistSpan[i].innerHTML.toLowerCase() === key)
+        artistSpan[i].style.visibility = "visible";
     }
   }
 
@@ -187,5 +191,23 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     if (selectedArtistArray.indexOf(selectedArtistString) === -1) {
       selectedArtistArray.push(selectedArtistString);
     }
+  }
+
+  // Add artist name into DOM
+  function addArtistNametoDom () {
+    var artistDiv = document.getElementById("artist-name");
+    artistDiv.innerHTML = "<h1 class=\"h1\">Correct!  Artist was:" + "\n" + selectedArtistString + "</h1>";
+  }
+
+  // Update win counter in DOM
+  function updateWinCounterinDom () {
+    var winDom = document.getElementById("wins");
+    winDom.innerHTML = wins;
+  }
+
+  // Update number of guesses remaining
+  function updateGuessDom () {
+    var guessDom = document.getElementById("guesses");
+    guessDom.innerHTML = self.numberOfGuessesCount;
   }
 }

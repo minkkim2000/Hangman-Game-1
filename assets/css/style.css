@@ -1,0 +1,46 @@
+@font-face {
+	font-family: tobec;
+	src: url(fonts/Tobec.ttf);
+}
+
+.h1 {
+	font-family: tobec;
+}
+
+.page-header {
+	margin:0;
+}
+
+.jumbotron {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+#mode-selector {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+#images {
+	padding: 2em;
+}
+
+#game-stats {
+	padding: 2em;
+}
+
+#hangman-container {
+	padding-top: 5%;
+}
+
+.list-inline li h1 {
+	border-bottom: solid;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
