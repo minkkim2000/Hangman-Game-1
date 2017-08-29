@@ -5,9 +5,15 @@ body {
 @font-face {
 	font-family: tobec;
 	src: url(fonts/Tobec.ttf);
+/*	font-family: skater;
+	src: url(fonts/skaterdudes.ttf);*/
 }
 
 .h1 {
+	font-family: tobec;
+}
+
+.h3,.h4 {
 	font-family: tobec;
 }
 
@@ -29,6 +35,8 @@ body {
 
 #images {
 	padding: 2em;
+	border-bottom: 50px;
+	border-image: url(../images/border.png) 5% fill repeat;
 }
 
 #game-stats {
