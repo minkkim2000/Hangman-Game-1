@@ -96,6 +96,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       console.log("WIN!");
       addArtistNametoDom();
       updateWinCounterinDom();
+      updateImgSongDom();
       correctlyGuessedArtists();
       gameOverCheck();
     }
@@ -217,5 +218,14 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     console.log(userGuessArray + "this is what your looking for");
     var alreadyGuessedDom = document.getElementById("already-guessed");
     alreadyGuessedDom.innerHTML = userGuessArray.toString().toUpperCase();
+  }
+
+  // Update image and play song when artist is correctly guessed
+  function updateImgSongDom () {
+    var imgSelector = document.getElementById("artist-img");
+    var audioSelector = document.getElementById("song-player")
+    imgSelector.src="assets/images/"+selectedArtistString+".jpg";
+    audioSelector.src="assets/audio/"+selectedArtistString+".mp3";
+
   }
 }

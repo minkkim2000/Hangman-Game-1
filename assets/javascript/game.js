@@ -4,7 +4,8 @@ var hard = 12;
 var gameMode;
 var gameCategory;
 var hangman;
-var twothousandsHipHopArtistArray = ["Eminem","Kanye West","50 Cent","Lil Wayne","Fabolous","TPain","Drake","The Game","Fat Joe","Outkast"];
+// ,"Kanye West","50 Cent","Lil Wayne","Fabolous","TPain","Drake","The Game","Fat Joe","Outkast"
+var twothousandsHipHopArtistArray = ["Eminem"];
 var ninetiesHipHopArtistArray = ["Nas", "Warren G", "Wu Tang", "Dr Dre", "Snoop Dogg", "Jay Z", "Ice Cube", "TuPac", "Salt N Pepa", "Notorious BIG"];
 var modeSelector = document.getElementById("game-mode");
 var startGame = document.getElementById("start-game");
