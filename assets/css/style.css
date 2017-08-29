@@ -1,3 +1,7 @@
+body {
+	/*background-image: url(../images/HipHopClassics.jpg)*/
+}
+
 @font-face {
 	font-family: tobec;
 	src: url(fonts/Tobec.ttf);

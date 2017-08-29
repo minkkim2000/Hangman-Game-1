@@ -68,7 +68,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       gameOverCheck();
     }
     userCorrectGuessTracker(key);
-    updateAlreadyGuessed();
+    updateAlreadyGuessedDom();
   }
 
   // Track how many letters the user has guessed correctly
@@ -213,7 +213,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   }
 
   // Update letters already guessed in DOM
-  function updateAlreadyGuessed () {
+  function updateAlreadyGuessedDom () {
     console.log(userGuessArray + "this is what your looking for");
     var alreadyGuessedDom = document.getElementById("already-guessed");
     alreadyGuessedDom.innerHTML = userGuessArray.toString().toUpperCase();
