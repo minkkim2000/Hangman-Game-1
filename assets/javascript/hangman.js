@@ -24,7 +24,10 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   var selectedArtistString;
   // Number of unique letters in the artist's name
   var artistLetterCount = 0;
-  // Function to randomly select artist
+  // Track number of wins;
+  var wins = 0;
+
+  // Randomly select artist
   function artistGenerator () {
     if(self.isPlayingBoolean === true) {
       // Randomly selected an index number 
@@ -87,6 +90,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     }
     // Once the correct number of letters has been guessed, generate a new round and reset userGuessArray and userCorrectGuessesArray
     if(userCorrectGuessesArray.length === artistLetterCount){
+      wins++;
       console.log("WIN!");
       correctlyGuessedArtists();
       gameOverCheck();
@@ -95,7 +99,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Number of guesses remaining
   function guessNumberCalculator () {
-    self.numberOfGuessesCount = self.numberOfGuessesCount - 1;
+    self.numberOfGuessesCount--;
   }
 
   // Insert artist name into DOM
