@@ -81,7 +81,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       console.log(selectedArtistString);
       // Check to see if artist has already been selected
       if(!(selectedArtistArray.indexOf(selectedArtistString) === -1)) {
-        // Recursively call on function again to select a new name
+        // Recursively call on function to select a new name, return to break out of the previous call to the function
         return artistGenerator();
       }
       // Determine number of unique letters in artist name
