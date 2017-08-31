@@ -50,6 +50,10 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     "notorious big":  "Juicy"
   };
 
+  var artistNameId = "artist-name";
+  var artistImgId = "artist-img";
+  var songNameId = "song-name";
+
   // Randomly select artist
   function artistGenerator () {
     if(self.isPlayingBoolean === true) {
@@ -119,12 +123,18 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     if(userCorrectGuessesArray.length === artistLetterCount){
       wins++;
       console.log("WIN!");
-      addArtistNametoDom();
-      addAristSongNametoDom();
+      updateSongDom();
       updateWinCounterinDom();
-      updateImgSongDom();
-      correctlyGuessedArtists();
-      gameOverCheck();
+      addFade(artistImgId);
+      addFade(artistNameId);
+      addFade(songNameId);
+      setTimeout(function () {
+        addArtistNametoDom();
+        addArtistSongNametoDom();
+        updateImgDom();
+        correctlyGuessedArtists();
+        gameOverCheck();
+      },1000);
     }
   }
 
@@ -225,11 +235,13 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function addArtistNametoDom () {
     var artistDiv = document.getElementById("artist-name");
     artistDiv.innerHTML = "<h1 class=\"h1\">Corret!  " + selectedArtistString + "</h1>";
+    removeFade(artistNameId);
   }
 
-  function addAristSongNametoDom () {
+  function addArtistSongNametoDom () {
     var artistSongDiv = document.getElementById("song-name");
     artistSongDiv.innerHTML = "<h1 class=\"h1\">Now Playing - " + songNameObj[selectedArtistString.toLowerCase()] + "</h1>";
+    removeFade(songNameId);
   }
 
   // Update win counter in DOM
@@ -251,11 +263,25 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     alreadyGuessedDom.innerHTML = userGuessArray.toString().toUpperCase();
   }
 
-  // Update image and play song when artist is correctly guessed
-  function updateImgSongDom () {
+  // Update image when artist is correctly guessed
+  function updateImgDom () {
     var imgSelector = document.getElementById("artist-img");
-    var audioSelector = document.getElementById("song-player")
-    imgSelector.src="assets/images/"+selectedArtistString+".jpg";
-    audioSelector.src="assets/audio/"+selectedArtistString+".mp3";
+    imgSelector.src="assets/images/" + selectedArtistString + ".jpg";
+    removeFade(artistImgId);
+  }
+
+  function updateSongDom () {
+    var audioSelector = document.getElementById("song-player");
+    audioSelector.src="assets/audio/" + selectedArtistString + ".mp3";
+  }
+
+  function addFade (id) {
+    var imgSelector = document.getElementById(id);
+    imgSelector.classList.add("fade");
+  }
+
+  function removeFade (id) {
+    var imgSelector = document.getElementById(id);
+    imgSelector.classList.remove("fade");
   }
 }

@@ -1,9 +1,11 @@
-var easy = 27;
-var medium = 18;
-var hard = 12;
 var gameMode;
 var gameCategory;
 var hangman;
+var easy = 27;
+var medium = 18;
+var hard = 12;
+var hipHop2k = "assets/images/2000HipHop.jpg"
+var hipHop90s = "assets/images/Back to 90s.jpg"
 var twothousandsHipHopArtistArray = ["Eminem","Kanye West","50 Cent","Lil Wayne","Fabolous","TPain","nelly","The Game","Fat Joe","Outkast"];
 var ninetiesHipHopArtistArray = ["Nas", "Aaliyah", "Warren G", "Dr Dre", "Snoop Dogg", "Jay Z", "Ice Cube", "TuPac", "Salt N Pepa", "Notorious BIG"];
 var modeSelector = document.getElementById("game-mode");
@@ -35,7 +37,7 @@ startGame.addEventListener("click",function () {
 				hangman = new Hangman(ninetiesHipHopArtistArray,medium);
 			else if (gameMode === "hard") 
 				hangman = new Hangman(ninetiesHipHopArtistArray,hard);
-			imgSelector.src="assets/images/Back to 90s.jpg"
+			fade(hipHop90s);
 		}
 		else if (gameCategory === "2000") {
 			if (gameMode === "easy") 
@@ -44,7 +46,7 @@ startGame.addEventListener("click",function () {
 				hangman = new Hangman(twothousandsHipHopArtistArray,medium);
 			else if (gameMode === "hard") 
 				hangman = new Hangman(twothousandsHipHopArtistArray,hard);
-			imgSelector.src="assets/images/2000HipHop.jpg"
+			fade(hipHop2k);
 		}
 		hangman.isPlayingBoolean = true;
 		hangman.artistGenerator();
@@ -92,4 +94,12 @@ function removeElements() {
 	guessed.innerHTML = "";
 	artistName.innerHTML = "";
 	artistSongName.innerHTML = "";
+}
+
+function fade (path) {
+	imgSelector.classList.add("fade");
+	setTimeout(function () {
+		imgSelector.classList.remove("fade");
+    imgSelector.src=path;
+  },1000);
 }
