@@ -50,25 +50,27 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Display letters user already guessed
   function userGuessTracker (key) {
-    guessNumberCalculator();
-    if(this.numberOfGuessesCount > 0){
-      // Check if array is empty
-      if(userGuessArray.length > 0){
-        // Check if letter already in array
-        if(userGuessArray.indexOf(key) === -1)
-          userGuessArray.push(key);
+    if(this.isPlayingBoolean === true){
+      guessNumberCalculator();
+      if(this.numberOfGuessesCount > 0){
+        // Check if array is empty
+        if(userGuessArray.length > 0){
+          // Check if letter already in array
+          if(userGuessArray.indexOf(key) === -1)
+            userGuessArray.push(key);
+        }
+        else if (userGuessArray.length === 0) {
+          userGuessArray.push(key);  
+        }
+        console.log(userGuessArray);
       }
-      else if (userGuessArray.length === 0) {
-        userGuessArray.push(key);  
+      else if (this.numberOfGuessesCount <= 0){
+        console.log("LOSS!");
+        gameOverCheck();
       }
-      console.log(userGuessArray);
+      userCorrectGuessTracker(key);
+      updateAlreadyGuessedDom();
     }
-    else if (this.numberOfGuessesCount <= 0){
-      console.log("LOSS!");
-      gameOverCheck();
-    }
-    userCorrectGuessTracker(key);
-    updateAlreadyGuessedDom();
   }
 
   // Track how many letters the user has guessed correctly
@@ -177,8 +179,8 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function gameOverCheck () {
     if(selectedArtistArray.length === self.artistArray.length) {
       self.isPlayingBoolean = false;
-      var artistUl = document.getElementById("container");
-      artistUl.innerHTML = "<h1>Game Over!</h1>";
+      var artistUl = document.getElementById("artist-name");
+      artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
     }
     else if (selectedArtistArray.length < self.artistArray.length) {
       self.numberOfGuessesCount = numberOfGuessesCount;

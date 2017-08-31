@@ -5,16 +5,19 @@ body {
 @font-face {
 	font-family: tobec;
 	src: url(fonts/Tobec.ttf);
-/*	font-family: skater;
-	src: url(fonts/skaterdudes.ttf);*/
+}
+
+@font-face {
+		font-family: skater;
+	src: url(fonts/skaterdudes.ttf);
 }
 
 .h1 {
 	font-family: tobec;
 }
 
-.h3,.h4 {
-	font-family: tobec;
+.h3,.h4, button {
+	font-family: skater;
 }
 
 .page-header {
@@ -41,10 +44,6 @@ body {
 
 #game-stats {
 	padding: 2em;
-}
-
-#hangman-container {
-	padding-top: 5%;
 }
 
 .list-inline li h1 {

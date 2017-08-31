@@ -4,9 +4,8 @@ var hard = 12;
 var gameMode;
 var gameCategory;
 var hangman;
-// ,"Kanye West","50 Cent","Lil Wayne","Fabolous","TPain","Drake","The Game","Fat Joe","Outkast"
-var twothousandsHipHopArtistArray = ["Eminem"];
-var ninetiesHipHopArtistArray = ["Nas", "Warren G", "Wu Tang", "Dr Dre", "Snoop Dogg", "Jay Z", "Ice Cube", "TuPac", "Salt N Pepa", "Notorious BIG"];
+var twothousandsHipHopArtistArray = ["Eminem","Kanye West","50 Cent","Lil Wayne","Fabolous","TPain","nelly","The Game","Fat Joe","Outkast"];
+var ninetiesHipHopArtistArray = ["Nas", "Aaliyah", "Warren G", "Dr Dre", "Snoop Dogg", "Jay Z", "Ice Cube", "TuPac", "Salt N Pepa", "Notorious BIG"];
 var modeSelector = document.getElementById("game-mode");
 var startGame = document.getElementById("start-game");
 var categorySelector = document.getElementById("game-category");
@@ -26,6 +25,7 @@ categorySelector.addEventListener("click",function (event) {
 })
 
 startGame.addEventListener("click",function () {
+	human = null;
 	if (!(gameMode === undefined || gameCategory === undefined)){
 		if(gameCategory === "90") {
 			if (gameMode === "easy")
@@ -77,3 +77,20 @@ function selectButton (event, button) {
 	event.target.classList.add("active");
 }
 
+function removeElements() {
+	var wins = document.getElementById("wins");
+	var artistName = document.getElementById("angman-ul");
+	var guesses = document.getElementById("guesses");
+	var guessed = document.getElementById("already-guessed");
+	var elementsArray = [];
+	
+	elementsArray.push(wins);
+	elementsArray.push(artistName);
+	elementsArray.push(guesses);
+	elementsArray.push(guesses);
+
+	for (var i = 0; i < elementsArray.length; i++) {
+		if(elementsArray[i] !== undefined || elementsArray[i] !== null)
+			elementsArray[i].parentNode.removeChild(elementsArray[i]);
+	}
+}
