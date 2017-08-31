@@ -25,7 +25,8 @@ categorySelector.addEventListener("click",function (event) {
 })
 
 startGame.addEventListener("click",function () {
-	human = null;
+	hangman = null;
+	removeElements();
 	if (!(gameMode === undefined || gameCategory === undefined)){
 		if(gameCategory === "90") {
 			if (gameMode === "easy")
@@ -79,18 +80,16 @@ function selectButton (event, button) {
 
 function removeElements() {
 	var wins = document.getElementById("wins");
-	var artistName = document.getElementById("angman-ul");
+	var artistNameGuess = document.getElementById("hangman-ul");
 	var guesses = document.getElementById("guesses");
 	var guessed = document.getElementById("already-guessed");
-	var elementsArray = [];
+	var artistName = document.getElementById("artist-name");
+	var artistSongName = document.getElementById("song-name");
 	
-	elementsArray.push(wins);
-	elementsArray.push(artistName);
-	elementsArray.push(guesses);
-	elementsArray.push(guesses);
-
-	for (var i = 0; i < elementsArray.length; i++) {
-		if(elementsArray[i] !== undefined || elementsArray[i] !== null)
-			elementsArray[i].parentNode.removeChild(elementsArray[i]);
-	}
+	wins.innerHTML = "";
+	artistName.innerHTML = "";
+	guesses.innerHTML = "";
+	guessed.innerHTML = "";
+	artistName.innerHTML = "";
+	artistSongName.innerHTML = "";
 }

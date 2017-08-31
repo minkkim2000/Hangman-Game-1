@@ -26,6 +26,29 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   var artistLetterCount = 0;
   // Track number of wins;
   var wins = 0;
+  // Object to track song names
+  var songNameObj = {
+    eminem: "My Name Is",
+    "kanye west":  "Through The Wire",
+    "50 cent":  "In Da Club",
+    "lil wayne":  "A Mili",
+    fabolous:  "I'm So Into You",
+    tpain:  "Bartender",
+    nelly:  "Dilemma",
+    "the game":  "Hate It or Love It",
+    "fat joe":  "What's Love?",
+    outkast:  "Roses",
+    nas:  "If I Ruled The World",
+    aaliyah:  "Are You That Somebody?",
+    "warren g":  "Regulate",
+    "dr dre":  "Nuthin But A G Thang",
+    "snoop dogg":  "Gin And Juice",
+    "Jay Z":  "Feelin It",
+    "ice cube":  "Check Yo Self",
+    tupac:  "Dear Mama",
+    "salt n pepa":  "Something",
+    "notorious big":  "Juicy"
+  };
 
   // Randomly select artist
   function artistGenerator () {
@@ -97,6 +120,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       wins++;
       console.log("WIN!");
       addArtistNametoDom();
+      addAristSongNametoDom();
       updateWinCounterinDom();
       updateImgSongDom();
       correctlyGuessedArtists();
@@ -200,7 +224,12 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Add artist name into DOM
   function addArtistNametoDom () {
     var artistDiv = document.getElementById("artist-name");
-    artistDiv.innerHTML = "<h1 class=\"h1\">Correct!  Artist was:" + "\n" + selectedArtistString + "</h1>";
+    artistDiv.innerHTML = "<h1 class=\"h1\">Corret!  " + selectedArtistString + "</h1>";
+  }
+
+  function addAristSongNametoDom () {
+    var artistSongDiv = document.getElementById("song-name");
+    artistSongDiv.innerHTML = "<h1 class=\"h1\">Now Playing - " + songNameObj[selectedArtistString.toLowerCase()] + "</h1>";
   }
 
   // Update win counter in DOM
@@ -228,6 +257,5 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     var audioSelector = document.getElementById("song-player")
     imgSelector.src="assets/images/"+selectedArtistString+".jpg";
     audioSelector.src="assets/audio/"+selectedArtistString+".mp3";
-
   }
 }
