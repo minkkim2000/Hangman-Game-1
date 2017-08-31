@@ -11,8 +11,8 @@
 </head>
 <body>
 	<header class="page-header">
-		<div class="jumbotron">
-			<h1 class="h1">Hip Hop Artist Hang Man game!</h1>
+		<div class="flex-column">
+			<h1 class="h1">Hip Hop Hang Man game!</h1>
 		</div>
 	</header>
 	<div class="container">
@@ -39,46 +39,46 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div id="artist-name" class="flex-column"></div>
-		</div>
-		<div class="row">
-			<div id="song-name" class="flex-column"></div>
-		</div>
-		<div class="row">
-			<div id="images" class="col-md-6">
-				<div class="row">
-					<div id="img-container" class="col-md-12">
-						<img id="artist-img" class="col-md-12 img-responsive" src="assets/images/HipHopClassics.jpg" alt="Image could not be displayed.">
-					</div>	
+		<div class="flex-column">
+			<div class="row">
+				<div id="artist-name" class="flex-column"></div>
+			</div>
+			<div class="row">
+				<div id="song-name" class="flex-column"></div>
+			</div>
+			<div class="row">
+				<div id="images" class="col-md-6">
+					<div class="row">
+						<div id="img-container" class="col-md-12">
+							<img id="artist-img" class="col-md-12 img-responsive" src="assets/images/HipHopClassics.jpg" alt="Image could not be displayed.">
+							<audio id="song-player" loop="loop" autoplay="autoplay" controls="controls">   
+				   			<source src="assets/audio/new edition.mp3" />  
+							</audio>
+						</div>	
+					</div>
+				</div>
+				<div id="game-stats" class="col-md-6 flex-column">
+					<div>
+						<span>Press the Start button to get started!</span>
+					</div>
+					<div class="flex-column">
+						<h3 class="h3">Wins</h4>
+						<h4 id="wins" class="h4"></h3>
+					</div>
+					<div id="hangman-container" class="col-md-12 flex-column">
+						<h3 class="h3">Current Artist Name</h3>
+						<ul id="hangman-ul" class="list-inline dl-horizontal"></ul>	
+					</div>
+					<div class="flex-column">
+						<h3 class="h3">Number of guesses remaining</h4>
+						<h4 id="guesses" class="h4"></h3>
+					</div>
+					<div class="flex-column">
+						<h4 class="h4">Letters already guessed</h4>
+						<h3 id="already-guessed" class="h3"></h3>
+					</div>
 				</div>
 			</div>
-			<div id="game-stats" class="col-md-6 flex-column">
-				<div>
-					<span>Press the Start button to get started!</span>
-				</div>
-				<div class="flex-column">
-					<h3 class="h3">Wins</h4>
-					<h4 id="wins" class="h4"></h3>
-				</div>
-				<div id="hangman-container" class="col-md-12 flex-column">
-					<h3 class="h3">Current Artist Name</h3>
-					<ul id="hangman-ul" class="list-inline dl-horizontal"></ul>	
-				</div>
-				<div class="flex-column">
-					<h3 class="h3">Number of guesses remaining</h4>
-					<h4 id="guesses" class="h4"></h3>
-				</div>
-				<div class="flex-column">
-					<h4 class="h4">Letters already guessed</h4>
-					<h3 id="already-guessed" class="h3"></h3>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<audio id="song-player" loop="loop" autoplay="autoplay" controls="controls">   
-			   <source src="assets/audio/new edition.mp3" />  
-			</audio>
 		</div>
 	</div>
 </body>

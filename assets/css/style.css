@@ -55,3 +55,9 @@ body {
 	flex-direction: column;
 	align-items: center;
 }
+
+/*.container,#images,#game-stats {
+	border-style: dashed;
+	border-width: .3em;
+	height: 100%;
+}*/
