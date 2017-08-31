@@ -29,12 +29,6 @@ h4 {
 	margin:0;
 }
 
-.jumbotron {
-	display: flex;
-	justify-content: center;
-	margin: 0 auto;
-}
-
 #mode-selector {
 	display: flex;
 	justify-content: space-between;
@@ -44,11 +38,11 @@ h4 {
 #images {
 	padding: 2em;
 	border-bottom: 50px;
-	/*border-image: url(../images/border.png) 5% fill repeat;*/
 }
 
 #game-stats {
 	padding: 2em;
+
 }
 
 .list-inline li h1 {
@@ -62,17 +56,11 @@ h4 {
 }
 
 #artist-img {
+	width: 100%;
 	transition: 1s ease-in-out;
 }
 
 .fade {
 	opacity:0;
 	transition: 1s ease-in-out;
-}
-
-.fade-in {
-	opacity: 0;
-	animation:fadeIn ease-in 1;
-	animation-fill-mode:forwards;
-	animation-duration:1s;
 }

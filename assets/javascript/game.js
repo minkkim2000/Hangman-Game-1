@@ -52,7 +52,7 @@ startGame.addEventListener("click",function () {
 		hangman.artistGenerator();
 	}
 	else if (gameMode === undefined || gameCategory === undefined)
-		alert("Please select a game mode and a category");
+		alert("Please choose a difficulty and pick an era");
 })
 
 document.onkeyup = function(event) {
@@ -62,7 +62,7 @@ document.onkeyup = function(event) {
 			hangman.userGuessTracker(event.key);
 	}
 	else
-		alert("Please select a game mode and a category");
+		alert("Please choose a difficulty and pick an era");
 }
 
 gameModeSelector.addEventListener("click", function (event) {
@@ -101,5 +101,5 @@ function fade (path) {
 	setTimeout(function () {
 		imgSelector.classList.remove("fade");
     imgSelector.src=path;
-  },1000);
+  },500);
 }
