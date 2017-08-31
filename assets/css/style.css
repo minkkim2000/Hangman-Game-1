@@ -1,0 +1,65 @@
+body {
+	/*background-image: url(../images/HipHopClassics.jpg)*/
+}
+
+@font-face {
+	font-family: tobec;
+	src: url(fonts/Tobec.ttf);
+}
+
+@font-face {
+		font-family: skater;
+	src: url(fonts/skaterdudes.ttf);
+}
+
+.h1 {
+	font-family: tobec;
+}
+
+.h3,.h4, button {
+	font-family: skater;
+}
+
+h4 {
+	font-family: 'Indie Flower', cursive;
+	font-size: 12;
+}
+
+.page-header {
+	margin:0;
+}
+
+#mode-selector {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+#images {
+	padding: 2em;
+	border-bottom: 50px;
+}
+
+#game-stats {
+	padding: 2em;
+}
+
+.list-inline li h1 {
+	border-bottom: solid;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#artist-img {
+	width: 100%;
+	transition: 1s ease-in-out;
+}
+
+.fade {
+	opacity:0;
+	transition: 1s ease-in-out;
+}
