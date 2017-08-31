@@ -17,19 +17,25 @@ var gameCategorySelector = document.getElementById("game-category");
 var gameCategoryButton = gameCategorySelector.getElementsByTagName("button");
 var imgSelector = document.getElementById("artist-img");
 
-
+// Event listener for game difficulty
 modeSelector.addEventListener("click",function (event) {
 	gameMode = event.target.id;
 })
 
+// Event listener for era (90's or 2000's)
 categorySelector.addEventListener("click",function (event) {
 	gameCategory = event.target.id;
 })
 
+// Event listener to start game
 startGame.addEventListener("click",function () {
+	// Remove previous instance of hangman object
 	hangman = null;
+	// Remove any existing elements created through javascript
 	removeElements();
+	// Make sure a game difficulty and era selected
 	if (!(gameMode === undefined || gameCategory === undefined)){
+		// Depending on choice create new instance of hangman object and pass variables through 
 		if(gameCategory === "90") {
 			if (gameMode === "easy")
 				hangman = new Hangman(ninetiesHipHopArtistArray,easy);
@@ -48,31 +54,40 @@ startGame.addEventListener("click",function () {
 				hangman = new Hangman(twothousandsHipHopArtistArray,hard);
 			fade(hipHop2k);
 		}
+		// Set state of the game to true (playing)
 		hangman.isPlayingBoolean = true;
+		// Run the artist generator
 		hangman.artistGenerator();
 	}
+	// Notify user to select a mode if they didn't
 	else if (gameMode === undefined || gameCategory === undefined)
 		alert("Please choose a difficulty and pick an era");
 })
 
+// Event listener for any key presses that are letters or numbers
 document.onkeyup = function(event) {
 	if(!(gameMode === undefined || gameCategory === undefined)){
 		// Only allow numbers and letters
 		if((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90))
 			hangman.userGuessTracker(event.key);
 	}
-	else
-		alert("Please choose a difficulty and pick an era");
+	else {
+		if((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90))
+			alert("Please choose a difficulty and pick an era");
+	}
 }
 
+// Event listener to keep buttons lighted when clicking away
 gameModeSelector.addEventListener("click", function (event) {
 	selectButton(event, gameModeButton);
 });
 
+// Event listener to keep buttons lighted when clicking away
 gameCategorySelector.addEventListener("click", function (event) {
 	selectButton(event, gameCategoryButton);
 });
 
+// Function to keep button highlighted
 function selectButton (event, button) {
 	for (var i = 0; i < button.length; i++) {
 		button[i].classList.remove("active");
@@ -80,6 +95,7 @@ function selectButton (event, button) {
 	event.target.classList.add("active");
 }
 
+// Function to remove elements created by javascript
 function removeElements() {
 	var wins = document.getElementById("wins");
 	var artistNameGuess = document.getElementById("hangman-ul");
@@ -87,7 +103,7 @@ function removeElements() {
 	var guessed = document.getElementById("already-guessed");
 	var artistName = document.getElementById("artist-name");
 	var artistSongName = document.getElementById("song-name");
-	
+
 	wins.innerHTML = "";
 	artistName.innerHTML = "";
 	guesses.innerHTML = "";
@@ -96,6 +112,7 @@ function removeElements() {
 	artistSongName.innerHTML = "";
 }
 
+// Function to fade images
 function fade (path) {
 	imgSelector.classList.add("fade");
 	setTimeout(function () {

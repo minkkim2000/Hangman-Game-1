@@ -25,7 +25,9 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Number of unique letters in the artist's name
   var artistLetterCount = 0;
   // Track number of wins;
-  var wins = 0;
+  var winsCount = 0;
+  // Set the state of the game, win = true
+  var gameStateBoolean = false;
   // Object to track song names
   var songNameObj = {
     eminem: "My Name Is",
@@ -49,11 +51,26 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     "salt n pepa":  "Something",
     "notorious big":  "Juicy"
   };
-  // Id's for elements on DOM to be manipulated
-  var artistNameId = "artist-name";
-  var artistImgId = "artist-img";
-  var songNameId = "song-name";
 
+  // Id's for elements on DOM to be manipulated
+  // Artist name displayed when correctly guessed
+  var artistNameId = "artist-name";
+  // Image displayed and changed when correctly guessed
+  var artistImgId = "artist-img";
+  // Song name updated when correctly guessed
+  var songNameId = "song-name";
+  // Artist name displayed and reveals correctly guessed letters
+  var artistNameDispalyId = "hangman-ul";
+  // Number of correctly guessed artists
+  var winCountId = "wins";
+  // Number of guesses remaining
+  var guessRemainId = "guesses";
+  // Letters arleady guessed
+  var alreadyGuessedId = "already-guessed";
+  // Music player
+  var audioId = "song-player";
+
+  // Functions to determine game logic
   // Randomly select artist
   function artistGenerator () {
     if(self.isPlayingBoolean === true) {
@@ -65,40 +82,45 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       // Check to see if artist has already been selected
       if(!(selectedArtistArray.indexOf(selectedArtistString) === -1)) {
         // Recursively call on function again to select a new name
-        artistGenerator();
+        return artistGenerator();
       }
       // Determine number of unique letters in artist name
       uniqueArtistLetterCount();
       // Update with artist name and remaining guesses
       insertArtistIntoDom();
       updateGuessesRemainingDom();
+      gameStateBoolean = false;
     }
   }
 
   // Track and display letters user already guessed
   function userGuessTracker (key) {
+    // Only allow game to work if the game is still running
     if(this.isPlayingBoolean === true){
-      guessNumberCalculator();
-      if(this.numberOfGuessesCount > 0){
-        // Check if array is empty
-        if(userGuessArray.length > 0){
-          // Check if letter already in array
-          if(userGuessArray.indexOf(key) === -1)
-            userGuessArray.push(key);
+      // Block key tracking from firing when game is in a win state to allow processing for next artist name
+      if(gameStateBoolean === false) {
+        guessNumberCalculator();
+        // Check if there's any guesses left
+        if(this.numberOfGuessesCount > 0){
+          if(userGuessArray.length > 0){
+            // Check if letter already in array
+            if(userGuessArray.indexOf(key) === -1)
+              userGuessArray.push(key);
+          }
+          // Add to array if it's empty
+          else if (userGuessArray.length === 0)
+            userGuessArray.push(key); 
         }
-        // Add to array if it's empty
-        else if (userGuessArray.length === 0)
-          userGuessArray.push(key); 
+        //  If user runs out of guesses run through gameOverCheck function
+        else if (this.numberOfGuessesCount <= 0){
+          console.log("LOSS!");
+          gameOverCheck();
+        }
+        // Track correct guesses
+        userCorrectGuessTracker(key);
+        // Update Dom to indicate letters already guessed
+        updateAlreadyGuessedDom();
       }
-      //  If user runs out of guesses run through gameOverCheck function
-      else if (this.numberOfGuessesCount <= 0){
-        console.log("LOSS!");
-        gameOverCheck();
-      }
-      // Track correct guesses
-      userCorrectGuessTracker(key);
-      // Update Dom to indicate letters already guessed
-      updateAlreadyGuessedDom();
     }
   }
 
@@ -106,7 +128,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function userCorrectGuessTracker (key) {
     var hasOccurredBoolean = false;
     // Check if key is a correct answer
-    if(selectedArtistString.toLowerCase().indexOf(key) !== -1){
+    if(!(selectedArtistString.toLowerCase().indexOf(key) === -1)) {
       // Loop to check if the correct letter has already been entered
       for(var i = 0; i < userCorrectGuessesArray.length; i++){
         if(userCorrectGuessesArray[i] === key) {
@@ -120,11 +142,11 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         // Unhide the letter if it's correctly guessed
         unhideArtistLetterInDom(key);
       }
-      console.log(userCorrectGuessesArray);
     }
     // Once the correct number of letters has been guessed, generate a new round 
     if(userCorrectGuessesArray.length === artistLetterCount){
-      wins++;
+      winsCount++;
+      gameStateBoolean = true;
       console.log("WIN!");
       // Update song playing in DOM
       updateSongDom();
@@ -133,10 +155,6 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       addFade(artistImgId);
       addFade(artistNameId);
       addFade(songNameId);
-      // addArtistNametoDom();
-      // addArtistSongNametoDom();
-      // updateImgDom();
-      // correctlyGuessedArtists();
       // Delay to time fade in
       setTimeout(function () {
         // Update artist name in DOM
@@ -145,8 +163,8 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         addArtistSongNametoDom();
         // Update artist image in DOM
         updateImgDom();
+        // Add artist to the list of correctly guessed artists
         correctlyGuessedArtists();
-        // gameOverCheck();
       },1000);
     }
   }
@@ -154,13 +172,69 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Number of guesses remaining
   function guessNumberCalculator () {
     self.numberOfGuessesCount--;
+    // Update DOM to show number of guesses used
     updateGuessesRemainingDom();
+  }  
+
+  // Calculate how many unique letters in the artists name
+  function uniqueArtistLetterCount () {
+    // Set artistLetterCount to 0, this will reset the artist count variable when the user runs into the next round
+    artistLetterCount = 0;
+    var hasOccuredBoolean = false;
+    // Remove formatting from artist name
+    var artistNameFormattedString = selectedArtistString.replace(/ /g, "").toLowerCase();
+    console.log(artistNameFormattedString);
+    // Initial loop to select letter to check
+    for (var i = 1; i < artistNameFormattedString.length + 1; i++) {
+      // Loop through all prior letters in the artist's name to identify if they've occurred before
+      for (var j = 0; j < i; j++) {
+        // Set the hasOccurred boolean to true if there has been a previous occurrance of the letter and break out of current loop
+        if(artistNameFormattedString.charAt(i-1) === artistNameFormattedString.charAt(j-1)){
+          hasOccuredBoolean = true;
+          break;
+        }
+      }
+      // Ternary operator to add to the count if there has been no occurance of the letter in the artist name in any positions prior to the current one (is hasOccuredBoolean == true)
+      artistLetterCount = hasOccuredBoolean === true ? artistLetterCount + 0 : artistLetterCount + 1;
+      hasOccuredBoolean = false;
+    }
   }
 
+  // Function to reset arrays for new rounds
+  function resetArray (array) {
+    array.length = 0;
+  }
+
+  // Check to end the game
+  function gameOverCheck () {
+    if(selectedArtistArray.length === self.artistArray.length) {
+      self.isPlayingBoolean = false;
+      var artistUl = document.getElementById(artistNameId);
+      artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
+    }
+    else if (selectedArtistArray.length < self.artistArray.length) {
+      self.numberOfGuessesCount = numberOfGuessesCount;
+      artistGenerator();
+      resetArray(userGuessArray);
+      resetArray(userCorrectGuessesArray);
+      updateAlreadyGuessedDom();
+    }
+  }
+
+  // If artist was correctly guessed add artist to selectedArtistArray
+  function correctlyGuessedArtists () {
+    if (selectedArtistArray.indexOf(selectedArtistString) === -1) {
+      selectedArtistArray.push(selectedArtistString);
+      // Once artist has been entered into aray check to see if game should end
+      gameOverCheck();
+    }
+  }
+
+  // All DOM manipulation functions 
   // Insert artist name into DOM
   function insertArtistIntoDom () {
     // Select UL by ID Name
-    var artistUl = document.getElementById("hangman-ul");
+    var artistUl = document.getElementById(artistNameDispalyId);
     var artistLi = "";
     // Reset innerHTML to blank
     artistUl.innerHTML = "";
@@ -185,63 +259,11 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Unhide correctly guessed letters
   function unhideArtistLetterInDom (key) {
-    var artistUl = document.getElementById("hangman-ul");
+    var artistUl = document.getElementById(artistNameDispalyId);
     var artistSpan = artistUl.getElementsByTagName("span");
     for(var i = 0; i < artistSpan.length; i++) {
       if(artistSpan[i].innerHTML.toLowerCase() === key)
         artistSpan[i].style.visibility = "visible";
-    }
-  }
-
-  // Calculate how many unique letters in the artists name
-  function uniqueArtistLetterCount () {
-    // Set artistLetterCount to 0, this will reset the artist count variable when the user runs into the next round
-    artistLetterCount = 0;
-    var hasOccuredBoolean = false;
-    // Remove spaces from artist name
-    var artistNameFormattedString = selectedArtistString.replace(/ /g, "").toLowerCase();
-    console.log(artistNameFormattedString);
-    // Initial loop to select letter to check
-    for (var i = 1; i < artistNameFormattedString.length + 1; i++) {
-      // Loop through all prior letters in the artist's name to identify if they've occurred before
-      for (var j = 0; j < i; j++) {
-        // Set the hasOccurred boolean to true if there has been a previous occurrance of the letter and break out of current loop
-        if(artistNameFormattedString.charAt(i-1) === artistNameFormattedString.charAt(j-1)){
-          hasOccuredBoolean = true;
-          break;
-        }
-      }
-      // Ternary operator to add to the count if there has been no occurance of the letter in the artist name in any positions prior to the current one (is hasOccuredBoolean == true)
-      artistLetterCount = hasOccuredBoolean == true ? artistLetterCount + 0 : artistLetterCount + 1;
-      hasOccuredBoolean = false;
-    }
-  }
-
-  // Function to reset arrays for new rounds
-  function resetArray (array) {
-    array.length = 0;
-  }
-
-  // Check to end the game
-  function gameOverCheck () {
-    if(selectedArtistArray.length === self.artistArray.length) {
-      self.isPlayingBoolean = false;
-      var artistUl = document.getElementById(artistNameId);
-      artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
-    }
-    else if (selectedArtistArray.length < self.artistArray.length) {
-      self.numberOfGuessesCount = numberOfGuessesCount;
-      artistGenerator();
-      resetArray(userGuessArray);
-      resetArray(userCorrectGuessesArray);
-    }
-  }
-
-  // If artist was correctly guessed add artist to selectedArtistArray
-  function correctlyGuessedArtists () {
-    if (selectedArtistArray.indexOf(selectedArtistString) === -1) {
-      selectedArtistArray.push(selectedArtistString);
-      gameOverCheck();
     }
   }
 
@@ -260,20 +282,19 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Update win counter in DOM
   function updateWinCounterinDom () {
-    var winDom = document.getElementById("wins");
-    winDom.innerHTML = wins;
+    var winDom = document.getElementById(winCountId);
+    winDom.innerHTML = winsCount;
   }
 
   // Update number of guesses remaining in DOM
   function updateGuessesRemainingDom () {
-    var guessDom = document.getElementById("guesses");
+    var guessDom = document.getElementById(guessRemainId);
     guessDom.innerHTML = self.numberOfGuessesCount;
   }
 
   // Update letters already guessed in DOM
   function updateAlreadyGuessedDom () {
-    console.log(userGuessArray + "this is what your looking for");
-    var alreadyGuessedDom = document.getElementById("already-guessed");
+    var alreadyGuessedDom = document.getElementById(alreadyGuessedId);
     alreadyGuessedDom.innerHTML = userGuessArray.toString().toUpperCase();
   }
 
@@ -284,16 +305,19 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     removeFade(artistImgId);
   }
 
+  // Update song playing in DOM 
   function updateSongDom () {
     var audioSelector = document.getElementById("song-player");
     audioSelector.src="assets/audio/" + selectedArtistString + ".mp3";
   }
 
+  // Add fade to DOM
   function addFade (id) {
     var imgSelector = document.getElementById(id);
     imgSelector.classList.add("fade");
   }
 
+  // Remove fade from DOM
   function removeFade (id) {
     var imgSelector = document.getElementById(id);
     imgSelector.classList.remove("fade");
