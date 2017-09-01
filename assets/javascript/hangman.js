@@ -270,7 +270,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Add artist name into DOM
   function addArtistNametoDom () {
     var artistDiv = document.getElementById(artistNameId);
-    artistDiv.innerHTML = "<h1 class=\"h1\">Corret!  " + selectedArtistString + "</h1>";
+    artistDiv.innerHTML = "<h1 class=\"h1\">Correct!  " + selectedArtistString + "</h1>";
     removeFade(artistNameId);
   }
 
