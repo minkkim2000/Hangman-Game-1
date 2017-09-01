@@ -118,5 +118,5 @@ function fade (path) {
 	setTimeout(function () {
 		imgSelector.classList.remove("fade");
     imgSelector.src=path;
-  },500);
+  },1000);
 }
