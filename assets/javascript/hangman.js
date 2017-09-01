@@ -301,14 +301,14 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Update image when artist is correctly guessed
   function updateImgDom () {
     var imgSelector = document.getElementById(artistImgId);
-    imgSelector.src="assets/images/" + selectedArtistString + ".jpg";
+    imgSelector.src="assets/images/" + selectedArtistString.toLowerCase() + ".jpg";
     removeFade(artistImgId);
   }
 
   // Update song playing in DOM 
   function updateSongDom () {
     var audioSelector = document.getElementById("song-player");
-    audioSelector.src="assets/audio/" + selectedArtistString + ".mp3";
+    audioSelector.src="assets/audio/" + selectedArtistString.toLowerCase() + ".mp3";
   }
 
   // Add fade to DOM
