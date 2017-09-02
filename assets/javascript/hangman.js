@@ -27,8 +27,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Track number of wins;
   var winsCount = 0;
   // Set the state of the game, win = true
-  var enableKeyTrackingBoolean = true;
-// gamestateboolean
+  var enableKeyTrackingBoolean;
   // Object to track song names
   var songNameObj = {
     eminem: "My Name Is",
@@ -68,8 +67,9 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   var guessRemainId = "guesses";
   // Letters arleady guessed
   var alreadyGuessedId = "already-guessed";
-  // Music player
+  // Music player (audio tag)
   var audioId = "song-player";
+  // Div that will display game over
   var gameOver = "game-over";
 
   // Functions to determine game logic
@@ -80,7 +80,6 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       var artistIndex = Math.floor(Math.random()*self.artistArray.length);
       // Assign artist name
       selectedArtistString = self.artistArray[artistIndex];
-      console.log(selectedArtistString);
       // Check to see if artist has already been selected
       if(!(selectedArtistArray.indexOf(selectedArtistString) === -1)) {
         // Recursively call on function to select a new name, return to break out of the previous call to the function
@@ -91,6 +90,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       // Update with artist name and remaining guesses
       insertArtistIntoDom();
       updateGuessesRemainingDom();
+      // enable key tracking
       enableKeyTrackingBoolean = true;
     }
   }
@@ -99,7 +99,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function userGuessTracker (key) {
     // Only allow game to work if the game is still running
     if(this.isPlayingBoolean === true){
-      // Block key tracking from firing when game is in a win state to allow processing for next artist name
+      // Block key tracking from firing when game is either win or loss
       if(enableKeyTrackingBoolean === true) {
         guessNumberCalculator();
         // Check if there's any guesses left
@@ -107,6 +107,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
           if(userGuessArray.length > 0){
             // Check if letter already in array
             if(userGuessArray.indexOf(key) === -1)
+              // Add to array if it's not in yet
               userGuessArray.push(key);
           }
           // Add to array if it's empty
@@ -115,7 +116,6 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         }
         //  If user runs out of guesses run through gameOverCheck function
         else if (this.numberOfGuessesCount <= 0){
-          console.log("LOSS!");
           enableKeyTrackingBoolean = false;
           gameOverCheck();
         }
@@ -130,7 +130,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Track how many letters the user has guessed correctly
   function userCorrectGuessTracker (key) {
     var hasOccurredBoolean = false;
-    // Check if key is a correct answer
+    // Check if key is a correct letter
     if(!(selectedArtistString.toLowerCase().indexOf(key) === -1)) {
       // Loop to check if the correct letter has already been entered
       for(var i = 0; i < userCorrectGuessesArray.length; i++){
@@ -150,7 +150,6 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     if(userCorrectGuessesArray.length === artistLetterCount){
       winsCount++;
       enableKeyTrackingBoolean = false;
-      console.log("WIN!");
       // Update song playing in DOM
       updateSongPlayingDom();
       // Update win counter in DOM
@@ -161,9 +160,9 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       // Delay to wait for 1s ease in from fade
       setTimeout(function () {
         // Update artist name in DOM
-        addArtistNametoDom();
+        addArtistNametoDom(removeFade);
         // Update song name in DOM
-        addArtistSongNametoDom();
+        addArtistSongNametoDom(removeFade);
         // Update artist image in DOM
         updateImgDom(removeFade);
         // Add artist to the list of correctly guessed artists
@@ -192,13 +191,13 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     for (var i = 1; i < artistNameFormattedString.length + 1; i++) {
       // Loop through all prior letters in the artist's name to identify if they've occurred before
       for (var j = 0; j < i; j++) {
-        // Set the hasOccurred boolean to true if there has been a previous occurrance of the letter and break out of current loop
+        // Set the hasOccurredboolean to true if there has been a previous occurrance of the letter and break out of current loop
         if(artistNameFormattedString.charAt(i-1) === artistNameFormattedString.charAt(j-1)){
           hasOccuredBoolean = true;
           break;
         }
       }
-      // Ternary operator to add to the count if there has been no occurance of the letter in the artist name in any positions prior to the current one (is hasOccuredBoolean == true)
+      // Add to the count if there has been no occurance of the letter in the artist name in any positions prior to the current one (if hasOccuredBoolean == true)
       artistLetterCount = hasOccuredBoolean === true ? artistLetterCount + 0 : artistLetterCount + 1;
       hasOccuredBoolean = false;
     }
@@ -211,6 +210,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Check to end the game
   function gameOverCheck () {
+    // End the game if the selectedArtistArray and artistArray are the same length
     if(selectedArtistArray.length === self.artistArray.length) {
       self.isPlayingBoolean = false;
       var artistUl = document.getElementById(gameOver);
@@ -218,6 +218,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
       }, 1200)
     }
+    // Keep going if the selectedArtistArray < artistArray length
     else if (selectedArtistArray.length < self.artistArray.length) {
       self.numberOfGuessesCount = numberOfGuessesCount;
       artistGenerator();
@@ -231,7 +232,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function addSelectedArtistArray (gameOverCB) {
     if (selectedArtistArray.indexOf(selectedArtistString) === -1) {
       selectedArtistArray.push(selectedArtistString);
-      // Once artist has been entered into aray check to see if game should end
+      // Once artist has been entered into array check to see if game should end
       gameOverCB();
     }
   }
@@ -274,16 +275,17 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   }
 
   // Add artist name into DOM
-  function addArtistNametoDom () {
+  function addArtistNametoDom (removeFadeCB) {
     var artistDiv = document.getElementById(artistNameId);
     artistDiv.innerHTML = "<h1 class=\"h3\">Correct!  " + selectedArtistString + "</h3>";
-    removeFade(artistNameId);
+    removeFadeCB(artistNameId);
   }
 
-  function addArtistSongNametoDom () {
+  // Display currently playing song
+  function addArtistSongNametoDom (removeFadeCB) {
     var artistSongDiv = document.getElementById(songNameId);
     artistSongDiv.innerHTML = "<h1 class=\"h3\">Now Playing - " + songNameObj[selectedArtistString.toLowerCase()] + "</h3>";
-    removeFade(songNameId);
+    removeFadeCB(songNameId);
   }
 
   // Update win counter in DOM
@@ -325,7 +327,6 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Remove fade from DOM
   function removeFade (id) {
-    // console.log(id);
     var imgSelector = document.getElementById(id);
     imgSelector.classList.remove("fade");
   }

@@ -1,13 +1,20 @@
+// Identifies game mode (easy, medium, hard)
 var gameMode;
+// Identifies era (90s or 2000s)
 var gameCategory;
+// Variable used to create a new instance of the hangman object
 var hangman;
+// Number of guesses based on mode (easy, medium and hard)
 var easy = 27;
 var medium = 18;
 var hard = 12;
+// File path for images
 var hipHop2k = "assets/images/2000HipHop.jpg"
 var hipHop90s = "assets/images/Back to 90s.jpg"
+// Array of available artists
 var twothousandsHipHopArtistArray = ["Eminem","Kanye West","50 Cent","Lil Wayne","Fabolous","TPain","nelly","The Game","Fat Joe","Outkast"];
 var ninetiesHipHopArtistArray = ["Nas", "Aaliyah", "Warren G", "Dr Dre", "Snoop Dogg", "Jay Z", "Ice Cube", "TuPac", "Puff Daddy", "Notorious BIG"];
+// DOM selectors
 var modeSelector = document.getElementById("game-mode");
 var startGame = document.getElementById("start-game");
 var categorySelector = document.getElementById("game-category");
@@ -77,12 +84,12 @@ document.onkeyup = function(event) {
 	}
 }
 
-// Event listener to keep buttons lighted when clicking away
+// Event listener to keep buttons highlighted when clicking away
 gameModeSelector.addEventListener("click", function (event) {
 	selectButton(event, gameModeButton);
 });
 
-// Event listener to keep buttons lighted when clicking away
+// Event listener to keep buttons highlighted when clicking away
 gameCategorySelector.addEventListener("click", function (event) {
 	selectButton(event, gameCategoryButton);
 });
