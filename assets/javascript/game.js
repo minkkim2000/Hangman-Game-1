@@ -122,5 +122,5 @@ function fade (path) {
 		setTimeout(function () {
 			imgSelector.classList.remove("fade");
 	  },200);
-	},900);
+	},1000);
 }
