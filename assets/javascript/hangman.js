@@ -170,7 +170,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         setTimeout(function () {
           removeFade(artistImgId);
         },200);
-      },800);
+      },1000);
     }
   }
 
