@@ -26,7 +26,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   var artistLetterCount = 0;
   // Track number of wins;
   var winsCount = 0;
-  // Set the state of the game, win = true
+  // Enables key tracking on game
   var enableKeyTrackingBoolean;
   // Object to track song names
   var songNameObj = {
@@ -70,19 +70,19 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Music player (audio tag)
   var audioId = "song-player";
   // Div that will display game over
-  var gameOver = "game-over";
+  var gameOverId = "game-over";
 
   // Functions to determine game logic
   // Randomly select artist
   function artistGenerator () {
     if(self.isPlayingBoolean === true) {
-      // Randomly selected an index number 
+      // Randomly select an index number 
       var artistIndex = Math.floor(Math.random()*self.artistArray.length);
       // Assign artist name
       selectedArtistString = self.artistArray[artistIndex];
       // Check to see if artist has already been selected
       if(!(selectedArtistArray.indexOf(selectedArtistString) === -1)) {
-        // Recursively call on function to select a new name, return to break out of the previous call to the function
+        // Recursively call on function to select a new name
         return artistGenerator();
       }
       // Determine number of unique letters in artist name
@@ -146,7 +146,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         unhideArtistLetterInDom(key);
       }
     }
-    // Once the correct number of letters has been guessed, generate a new round 
+    // Once the correct number of letters has been guessed, generate a new artist name 
     if(userCorrectGuessesArray.length === artistLetterCount){
       winsCount++;
       enableKeyTrackingBoolean = false;
@@ -213,7 +213,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     // End the game if the selectedArtistArray and artistArray are the same length
     if(selectedArtistArray.length === self.artistArray.length) {
       self.isPlayingBoolean = false;
-      var artistUl = document.getElementById(gameOver);
+      var artistUl = document.getElementById(gameOverId);
       setTimeout(function () {
         artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
       }, 1200)
