@@ -163,10 +163,12 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         addArtistSongNametoDom();
         // Update artist image in DOM
         updateImgDom();
-        removeFade(artistImgId);
         // Add artist to the list of correctly guessed artists
         correctlyGuessedArtists();
-      },1000);
+        setTimeout(function () {
+          removeFade(artistImgId);
+        },500);
+      },500);
     }
   }
 
