@@ -167,9 +167,6 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         // Add artist to the list of correctly guessed artists
         correctlyGuessedArtists();
         // Remove fade only after URL has been updated
-        setTimeout(function () {
-          removeFade(artistImgId);
-        },500);
       },1000);
     }
   }
@@ -309,6 +306,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function updateImgDom () {
     var imgSelector = document.getElementById(artistImgId);
     imgSelector.src="assets/images/" + selectedArtistString.toLowerCase() + ".jpg";
+    removeFade(artistImgId);
   }
 
   // Update song playing in DOM 
