@@ -115,8 +115,8 @@ function removeElements() {
 // Function to fade images
 function fade (path) {
 	imgSelector.classList.add("fade");
+	imgSelector.src=path;
 	setTimeout(function () {
 		imgSelector.classList.remove("fade");
-    imgSelector.src=path;
   },1000);
 }
