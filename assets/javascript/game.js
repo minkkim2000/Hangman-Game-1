@@ -103,6 +103,7 @@ function removeElements() {
 	var guessed = document.getElementById("already-guessed");
 	var artistName = document.getElementById("artist-name");
 	var artistSongName = document.getElementById("song-name");
+	var gameOver = document.getElementById("game-over");
 
 	wins.innerHTML = "";
 	artistName.innerHTML = "";
@@ -110,13 +111,16 @@ function removeElements() {
 	guessed.innerHTML = "";
 	artistName.innerHTML = "";
 	artistSongName.innerHTML = "";
+	gameOver.innerHTML = "";
 }
 
 // Function to fade images
 function fade (path) {
 	imgSelector.classList.add("fade");
-	imgSelector.src=path;
 	setTimeout(function () {
-		imgSelector.classList.remove("fade");
-  },1000);
+		imgSelector.src=path;
+		setTimeout(function () {
+			imgSelector.classList.remove("fade");
+	  },200);
+	},900);
 }

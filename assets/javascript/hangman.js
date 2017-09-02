@@ -69,6 +69,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   var alreadyGuessedId = "already-guessed";
   // Music player
   var audioId = "song-player";
+  var gameOver = "game-over";
 
   // Functions to determine game logic
   // Randomly select artist
@@ -165,10 +166,11 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         updateImgDom();
         // Add artist to the list of correctly guessed artists
         correctlyGuessedArtists();
+        // Remove fade only after URL has been updated
         setTimeout(function () {
           removeFade(artistImgId);
-        },500);
-      },500);
+        },200);
+      },800);
     }
   }
 
@@ -212,8 +214,10 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   function gameOverCheck () {
     if(selectedArtistArray.length === self.artistArray.length) {
       self.isPlayingBoolean = false;
-      var artistUl = document.getElementById(artistNameId);
-      artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
+      var artistUl = document.getElementById(gameOver);
+      setTimeout(function () {
+        artistUl.innerHTML = "<h1 class=\"h1\">Game Over!</h1>";
+      }, 1200)
     }
     else if (selectedArtistArray.length < self.artistArray.length) {
       self.numberOfGuessesCount = numberOfGuessesCount;
@@ -273,13 +277,13 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Add artist name into DOM
   function addArtistNametoDom () {
     var artistDiv = document.getElementById(artistNameId);
-    artistDiv.innerHTML = "<h1 class=\"h1\">Correct!  " + selectedArtistString + "</h1>";
+    artistDiv.innerHTML = "<h1 class=\"h3\">Correct!  " + selectedArtistString + "</h3>";
     removeFade(artistNameId);
   }
 
   function addArtistSongNametoDom () {
     var artistSongDiv = document.getElementById(songNameId);
-    artistSongDiv.innerHTML = "<h1 class=\"h1\">Now Playing - " + songNameObj[selectedArtistString.toLowerCase()] + "</h1>";
+    artistSongDiv.innerHTML = "<h1 class=\"h3\">Now Playing - " + songNameObj[selectedArtistString.toLowerCase()] + "</h3>";
     removeFade(songNameId);
   }
 
