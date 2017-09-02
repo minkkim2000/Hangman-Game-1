@@ -51,7 +51,7 @@ h4 {
 
 #artist-img {
 	width: 100%;
-	transition: 1s ease-in-out;
+	/*transition: 1s ease-in-out;*/
 }
 
 #main-content {
@@ -73,7 +73,7 @@ h4 {
 
 .fade {
 	opacity:0;
-	transition: 1s ease-in-out;
+	/*transition: 1s ease-in-out;*/
 }
 
 .flex-column {
