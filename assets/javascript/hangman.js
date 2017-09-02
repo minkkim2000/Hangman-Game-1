@@ -169,7 +169,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         // Remove fade only after URL has been updated
         setTimeout(function () {
           removeFade(artistImgId);
-        },200);
+        },500);
       },1000);
     }
   }
