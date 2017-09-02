@@ -73,7 +73,7 @@ h4 {
 
 .fade {
 	opacity:0;
-	transition: 1s ease-in-out;
+	/*transition: 1s ease-in-out;*/
 }
 
 .flex-column {
