@@ -157,22 +157,18 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       addFade(artistImgId);
       addFade(artistNameId);
       addFade(songNameId);
-      addArtistNametoDom(removeFade);
-      addArtistSongNametoDom(removeFade);
-      updateImgDom(removeFade);
-      addSelectedArtistArray(gameOverCheck);
       // Delay to wait for 1s ease in from fade
-      // setTimeout(function () {
-      //   // Update artist name in DOM
-      //   addArtistNametoDom(removeFade);
-      //   // Update song name in DOM
-      //   addArtistSongNametoDom(removeFade);
-      //   // Update artist image in DOM
-      //   updateImgDom(removeFade);
-      //   // Add artist to the list of correctly guessed artists
-      //   addSelectedArtistArray(gameOverCheck);
-      //   // Remove fade only after URL has been updated
-      // },1000);
+      setTimeout(function () {
+        // Update artist name in DOM
+        addArtistNametoDom(removeFade);
+        // Update song name in DOM
+        addArtistSongNametoDom(removeFade);
+        // Update artist image in DOM
+        updateImgDom(removeFade);
+        // Add artist to the list of correctly guessed artists
+        addSelectedArtistArray(gameOverCheck);
+        // Remove fade only after URL has been updated
+      },1000);
     }
   }
 
