@@ -150,22 +150,22 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       gameStateBoolean = true;
       console.log("WIN!");
       // Update song playing in DOM
-      updateSongDom();
+      updateSongPlayingDom();
       // Update win counter in DOM
       updateWinCounterinDom();
       addFade(artistImgId);
       addFade(artistNameId);
       addFade(songNameId);
-      // Delay to time fade in
+      // Delay to wait for 1s ease in from fade
       setTimeout(function () {
         // Update artist name in DOM
         addArtistNametoDom();
         // Update song name in DOM
         addArtistSongNametoDom();
         // Update artist image in DOM
-        updateImgDom();
+        updateImgDom(removeFade);
         // Add artist to the list of correctly guessed artists
-        correctlyGuessedArtists();
+        addSelectedArtistArray(gameOverCheck);
         // Remove fade only after URL has been updated
       },1000);
     }
@@ -226,11 +226,11 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   }
 
   // If artist was correctly guessed add artist to selectedArtistArray
-  function correctlyGuessedArtists () {
+  function addSelectedArtistArray (gameOverCB) {
     if (selectedArtistArray.indexOf(selectedArtistString) === -1) {
       selectedArtistArray.push(selectedArtistString);
       // Once artist has been entered into aray check to see if game should end
-      gameOverCheck();
+      gameOverCB();
     }
   }
 
@@ -303,14 +303,14 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   }
 
   // Update image when artist is correctly guessed
-  function updateImgDom () {
+  function updateImgDom (removeFadeCB) {
     var imgSelector = document.getElementById(artistImgId);
     imgSelector.src="assets/images/" + selectedArtistString.toLowerCase() + ".jpg";
-    removeFade(artistImgId);
+    removeFadeCB(artistImgId);
   }
 
   // Update song playing in DOM 
-  function updateSongDom () {
+  function updateSongPlayingDom () {
     var audioSelector = document.getElementById("song-player");
     audioSelector.src="assets/audio/" + selectedArtistString.toLowerCase() + ".mp3";
   }
@@ -323,6 +323,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
 
   // Remove fade from DOM
   function removeFade (id) {
+    // console.log(id);
     var imgSelector = document.getElementById(id);
     imgSelector.classList.remove("fade");
   }
