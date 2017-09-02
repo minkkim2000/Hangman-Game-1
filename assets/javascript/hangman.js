@@ -27,7 +27,8 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
   // Track number of wins;
   var winsCount = 0;
   // Set the state of the game, win = true
-  var gameStateBoolean = false;
+  var enableKeyTrackingBoolean = true;
+// gamestateboolean
   // Object to track song names
   var songNameObj = {
     eminem: "My Name Is",
@@ -90,7 +91,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
       // Update with artist name and remaining guesses
       insertArtistIntoDom();
       updateGuessesRemainingDom();
-      gameStateBoolean = false;
+      enableKeyTrackingBoolean = true;
     }
   }
 
@@ -99,7 +100,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     // Only allow game to work if the game is still running
     if(this.isPlayingBoolean === true){
       // Block key tracking from firing when game is in a win state to allow processing for next artist name
-      if(gameStateBoolean === false) {
+      if(enableKeyTrackingBoolean === true) {
         guessNumberCalculator();
         // Check if there's any guesses left
         if(this.numberOfGuessesCount > 0){
@@ -115,6 +116,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
         //  If user runs out of guesses run through gameOverCheck function
         else if (this.numberOfGuessesCount <= 0){
           console.log("LOSS!");
+          enableKeyTrackingBoolean = false;
           gameOverCheck();
         }
         // Track correct guesses
@@ -147,7 +149,7 @@ var Hangman = function (artistArray, numberOfGuessesCount) {
     // Once the correct number of letters has been guessed, generate a new round 
     if(userCorrectGuessesArray.length === artistLetterCount){
       winsCount++;
-      gameStateBoolean = true;
+      enableKeyTrackingBoolean = false;
       console.log("WIN!");
       // Update song playing in DOM
       updateSongPlayingDom();
